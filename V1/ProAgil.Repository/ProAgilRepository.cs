@@ -65,7 +65,8 @@ namespace ProAgil.Repository
                 .Include(c => c.RedesSociais);
 
             if (includePalestrantes) {
-                query = query.Include(pe => pe.PalestrantesEventos)
+                query = query
+                    .Include(pe => pe.PalestrantesEventos)
                     .ThenInclude(p => p.Palestrante);
             }
 
