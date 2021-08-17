@@ -17,11 +17,13 @@ export class EventosComponent implements OnInit {
 
   eventosFiltrados: Evento[] = [];
   eventos: Evento[] = [];
+  evento!: Evento;
   imagemLargura: number = 50;
   imagemMargem: number = 2;
   mostrarImagem: boolean = false;
-  modalRef: BsModalRef = new BsModalRef();
   registerForm: FormGroup = new FormGroup({});
+  modoSalvar: String = '';
+  bodyDeletarEvento: String = '';
 
   _filtroLista!: string;
 
@@ -44,8 +46,22 @@ export class EventosComponent implements OnInit {
       this.filtrarEventos(this.filtroLista) : this.eventos;
   }
 
-  openModal( template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  editarEvento(evento: Evento, template: any ) {
+    this.modoSalvar = 'put';
+    this.openModal(template);
+
+    this.evento = evento;
+    this.registerForm.patchValue(evento);
+  }
+
+  novoEvento(template: any ) {
+    this.modoSalvar = 'post';
+    this.openModal(template);
+  }
+
+  openModal( template: any ) {
+    this.registerForm.reset();
+    template.show();
   }
 
   ngOnInit() {
@@ -76,8 +92,47 @@ export class EventosComponent implements OnInit {
     })
   }
 
-  salvarAlteracao() {
+  salvarAlteracao(template: any) {
+    if (this.registerForm.valid) {
+      if (this.modoSalvar == 'put') {
+        this.evento = Object.assign({id: this.evento.id}, this.registerForm.value);
+        this.eventoService.putEvento(this.evento).subscribe(
+          () => {
+            template.hide();
+            this.getEventos();
+          }, error => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.evento = Object.assign({}, this.registerForm.value);
+        this.eventoService.postEvento(this.evento).subscribe(
+          (novoEvento: Evento) => {
+            template.hide();
+            this.getEventos();
+          }, error => {
+            console.log(error);
+          }
+        );
+      }
+    }
+  }
 
+  excluirEvento(evento: Evento, template: any) {
+    template.show();
+    this.evento = evento;
+    this.bodyDeletarEvento = `Tem certeza que deseja excluir o Evento: ${evento.tema}, Código: ${evento.id}`;
+  }
+
+  confirmeDelete(template: any) {
+    this.eventoService.deleteEvento(this.evento.id).subscribe(
+      () => {
+          template.hide();
+          this.getEventos();
+        }, error => {
+          console.log(error);
+        }
+    );
   }
 
   getEventos() {
