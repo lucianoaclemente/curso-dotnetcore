@@ -18,6 +18,7 @@ import { EventosComponent } from './eventos/eventos.component';
 import { PalestrantesComponent } from './palestrantes/palestrantes.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContatosComponent } from './contatos/contatos.component';
+import { TituloComponent } from './_shared/titulo/titulo.component';
 
 import { DateTimeFormatPipe } from './_helpers/DateTimeFormatPipe.pipe';
 
@@ -29,6 +30,7 @@ import { DateTimeFormatPipe } from './_helpers/DateTimeFormatPipe.pipe';
     PalestrantesComponent,
     DashboardComponent,
     ContatosComponent,
+    TituloComponent,
     DateTimeFormatPipe
    ],
   imports: [
