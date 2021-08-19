@@ -29,6 +29,8 @@ export class EventosComponent implements OnInit {
   modoSalvar: string = '';
   bodyDeletarEvento: string = '';
 
+  file: File | undefined;
+
   _filtroLista!: string;
 
   constructor(
@@ -54,9 +56,9 @@ export class EventosComponent implements OnInit {
   editarEvento(evento: Evento, template: any ) {
     this.modoSalvar = 'put';
     this.openModal(template);
-
-    this.evento = evento;
-    this.registerForm.patchValue(evento);
+    this.evento = Object.assign({}, evento);
+    this.evento.imagemUrl = '';
+    this.registerForm.patchValue(this.evento);
   }
 
   novoEvento(template: any ) {
@@ -97,10 +99,28 @@ export class EventosComponent implements OnInit {
     })
   }
 
+  onFileChange(event: any) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      this.file = event.target.files;
+    }
+  }
+
+  uploadImagem() {
+    const nomeArquivo = this.evento.imagemUrl.split('\\', 3);
+    this.evento.imagemUrl = nomeArquivo[2];
+
+    this.eventoService.postUpload(this.file, nomeArquivo[2]).subscribe();
+  }
+
   salvarAlteracao(template: any) {
     if (this.registerForm.valid) {
       if (this.modoSalvar == 'put') {
         this.evento = Object.assign({id: this.evento.id}, this.registerForm.value);
+
+        this.uploadImagem();
+
         this.eventoService.putEvento(this.evento.id, this.evento).subscribe(
           () => {
             template.hide();
@@ -112,6 +132,9 @@ export class EventosComponent implements OnInit {
         );
       } else {
         this.evento = Object.assign({}, this.registerForm.value);
+
+        this.uploadImagem();
+
         this.eventoService.postEvento(this.evento).subscribe(
           (novoEvento: Evento) => {
             template.hide();

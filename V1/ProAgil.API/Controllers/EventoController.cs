@@ -50,7 +50,7 @@ namespace ProAgil.API.Controllers
 
                 if (file.Length > 0) {
                     var filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName;
-                    var fullPath = Path.Combine(pathToSave, filename.Replace("\"", " ")).Trim();
+                    var fullPath = Path.Combine(pathToSave, filename.Replace("\"", "")).Trim();
 
                     using (var stream = new FileStream(fullPath, FileMode.Create)) {
                         file.CopyTo(stream);
@@ -64,7 +64,7 @@ namespace ProAgil.API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Banco de Dados Falhou {ex.Message}");
             }
 
-            return BadRequest("Erro ao tentar realizar upload");
+            //return BadRequest("Erro ao tentar realizar upload");
         }        
 
         [HttpGet("{EventoId}")]
