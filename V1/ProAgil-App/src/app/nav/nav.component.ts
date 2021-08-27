@@ -12,7 +12,7 @@ export class NavComponent implements OnInit {
 
   constructor(
     private toastr: ToastrService,
-    private authService: AuthService,
+    public authService: AuthService,
     public router: Router
   ) { }
 
@@ -21,6 +21,10 @@ export class NavComponent implements OnInit {
 
   loggedIn() {
     return this.authService.loggedIn();
+  }
+
+  entrar() {
+    this.router.navigate(['/user/login']);
   }
 
   logout() {
