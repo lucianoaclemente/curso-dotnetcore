@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Evento } from '../_models/Evento';
 import { EventoService } from '../_services/evento.service';
@@ -35,7 +35,6 @@ export class EventosComponent implements OnInit {
 
   constructor(
     private eventoService: EventoService,
-    private modalService: BsModalService,
     private fb: FormBuilder,
     private localeService: BsLocaleService,
     private toastr: ToastrService
@@ -176,5 +175,7 @@ export class EventosComponent implements OnInit {
     }
     );
   }
+
+
 
 }
