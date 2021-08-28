@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators/tap';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthInterceptor implements HttpInterceptor {
 
     constructor(private router: Router) { }
@@ -14,7 +16,8 @@ export class AuthInterceptor implements HttpInterceptor {
             const cloneReq = req.clone({
                 headers: req.headers.set('Authorization', `Bearer ${localStorage.getItem('token')}`)
             });
-            return next.handle(cloneReq).pipe(
+            return next.handle(cloneReq)
+              .pipe(
                 tap(
                     succ => { },
                     err => {
