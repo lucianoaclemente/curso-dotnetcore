@@ -15,6 +15,7 @@ import { EventoService } from './_services/evento.service';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { EventosComponent } from './eventos/eventos.component';
+import { EventoEditComponent } from './eventos/eventoEdit/eventoEdit.component';
 import { PalestrantesComponent } from './palestrantes/palestrantes.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContatosComponent } from './contatos/contatos.component';
@@ -31,6 +32,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     AppComponent,
     NavComponent,
     EventosComponent,
+    EventoEditComponent,
     PalestrantesComponent,
     DashboardComponent,
     ContatosComponent,
