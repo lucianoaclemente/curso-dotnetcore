@@ -40,7 +40,7 @@ namespace ProAgil.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {       
             services.AddDbContext<ProAgilContext>(
-                x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
 
             IdentityBuilder builder = services.AddIdentityCore<User>(options => 
